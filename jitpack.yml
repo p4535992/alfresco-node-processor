@@ -1,0 +1,6 @@
+# JitPack builds a normal JAR for Maven consumers. GitHub Releases
+# distribute the runnable Spring Boot JAR created by the release workflow.
+jdk:
+  - openjdk21
+install:
+  - mvn -B -ntp -DskipTests -Dlicense.skip=true -Dspring-boot.repackage.skip=true install
