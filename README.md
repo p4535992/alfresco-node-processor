@@ -246,6 +246,33 @@ Java and Maven required
 `mvn package -DskipTests -Dlicense.skip=true`
 
 look at the `build.sh` or `build.bat` scripts for creating a convenient distribution package.
+## Maven dependency (JitPack)
+
+After publishing a release such as `v0.9.1`, add the following to the **consuming project's** `pom.xml` (use the desired release tag as the version):
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    <repository>
+        <id>alfresco-public</id>
+        <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.p4535992</groupId>
+        <artifactId>alfresco-node-processor</artifactId>
+        <version>v0.9.1</version>
+    </dependency>
+</dependencies>
+```
+
+JitPack builds a regular library JAR for Maven use; the executable `anp.jar` is attached to the GitHub Release. To publish a version, choose **Actions → Publish release → Run workflow** on `master` and enter `0.9.1` (without `v`). The workflow creates the tag and release, then checks JitPack. The development `pom.xml` on `master` remains a SNAPSHOT.
+
 ## Application global config
 Global configuration is stored in `config/application.yml` file, the relevant parameters are:
 
