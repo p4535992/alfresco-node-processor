@@ -31,7 +31,7 @@
 
     <groupId>org.saidone</groupId>
     <artifactId>anp</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>0.9.1</version>
     <name>alfresco-node-processor</name>
     <description>Do things with nodes</description>
 
