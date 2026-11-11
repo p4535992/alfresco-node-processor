@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Release version without v (for example 0.9.1)'
+        description: 'Release version (for example 0.9.1)'
         required: true
         default: '0.9.1'
         type: string
@@ -41,15 +41,15 @@ jobs:
         run: |
           set -euo pipefail
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::Version must be in X.Y.Z format (without v)."
+            echo "::error::Version must be in X.Y.Z format."
             exit 1
           fi
-          if git rev-parse --verify --quiet "refs/tags/v${VERSION}" >/dev/null; then
-            echo "::error::Tag v${VERSION} already exists."
+          if git rev-parse --verify --quiet "refs/tags/${VERSION}" >/dev/null; then
+            echo "::error::Tag ${VERSION} already exists."
             exit 1
           fi
           echo "RELEASE_VERSION=$VERSION" >> "$GITHUB_ENV"
-          echo "RELEASE_TAG=v$VERSION" >> "$GITHUB_ENV"
+          echo "RELEASE_TAG=$VERSION" >> "$GITHUB_ENV"
 
       - name: Prepare release POM (tag-only commit)
         shell: bash
@@ -86,8 +86,8 @@ jobs:
           cat > "$RUNNER_TEMP/release-notes.md" <<EOF
           Alfresco Node Processor $RELEASE_TAG
 
-          - Executable application: download `anp.jar` below.
-          - Maven (JitPack): `com.github.p4535992:alfresco-node-processor:$RELEASE_TAG`
+          - Executable application: download \`anp.jar\` below.
+          - Maven (JitPack): \`com.github.p4535992:alfresco-node-processor:$RELEASE_TAG\`
           - Repository: https://jitpack.io
           EOF
           gh release create "$RELEASE_TAG" target/anp.jar \
